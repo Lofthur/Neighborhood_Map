@@ -19,7 +19,7 @@
 .btn {
 	width: 50px;
 	border-radius: 0;
-	background-color: #6AC7E6;
+	background-color: #6ac7e6;
 }
 
 .btn:hover {
@@ -39,11 +39,11 @@ button span {
 }
 
 .table-header-background {
-	background-color: #6AC7E6;
+	background-color: #6ac7e6;
 }
 
 .table-background {
-	background-color: #6AC7E6;
+	background-color: #6ac7e6;
 }
 
 .table-shadow {
@@ -51,7 +51,7 @@ button span {
 }
 
 .search-margin {
-	margin: 20px 0 20px 0;
+	margin: 20px 0;
 }
 
 .align-center {
