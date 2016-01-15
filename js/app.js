@@ -1,3 +1,5 @@
+'use strict';
+
 var NMap = function() {
 
 	var MapModel = {
@@ -58,8 +60,8 @@ var NMap = function() {
 				marker.addListener('click', function() {
 					infoWindow.open(map, marker);
 
-					if(marker.getAnimation() !== null) {
-						marker.setAnimation() === null;
+					if(marker.getAnimation() != null) {
+						marker.setAnimation() == null;
 					} else {
 						marker.setAnimation(google.maps.Animation.BOUNCE);
 						setTimeout(function(){marker.setAnimation(null);}, 1400);
