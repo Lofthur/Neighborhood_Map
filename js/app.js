@@ -14,6 +14,7 @@ var NMap = function() {
 
 	var map;
 	var places = Places();
+	var openInfoWindow;
 
 	// Initializes the arrays with data from places
 	var initArrays = function() {
@@ -61,8 +62,10 @@ var NMap = function() {
 
 			(function(infoWindow, marker) {
 				marker.addListener('click', function() {
-					infoWindow.open(map, marker);
 
+					closeLastOpenInfoWindow();
+					openInfoWindow = infoWindow;
+					infoWindow.open(map, marker);
 					if(marker.getAnimation() != null) {
 						marker.setAnimation() == null;
 					} else {
@@ -75,6 +78,12 @@ var NMap = function() {
 
 			MapModel.holdMarkersArray.push(marker);
 			marker.setMap(map);
+		}
+	};
+
+	var closeLastOpenInfoWindow = function() {
+		if(openInfoWindow) {
+			openInfoWindow.close();
 		}
 	};
 
@@ -123,7 +132,6 @@ var NMap = function() {
 		}
 		linkClick(index);
 	};
-
 	// Triggers the marker click event from a table cell
 	var linkClick = function(id) {
 		google.maps.event.trigger(MapModel.holdMarkersArray()[id], 'click');
