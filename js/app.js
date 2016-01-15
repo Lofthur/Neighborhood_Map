@@ -14,10 +14,11 @@ var NMap = function() {
 
 	var map;
 	var places = Places();
-	
+
 	// Initializes the arrays with data from places
 	var initArrays = function() {
-		for(var i = 0; i < places.myPlaces.length; i++) {
+		var arrLength = places.myPlaces.length;
+		for(var i = 0; i < arrLength; i++) {
 			MapModel.placesArray.push(places.myPlaces[i]);
 			MapModel.markerArray.push(places.myPlaces[i]);
 		}
@@ -37,12 +38,14 @@ var NMap = function() {
 
 	// This function creates the markers from the markerArray
 	var setMarkers = function() {
+		var arrLength = MapModel.markerArray().length;
 		var initLat;
 		var marker;
 		var infoWindow;
 		var initLng;
 		var latLng;
-		for(var i = 0; i < MapModel.markerArray().length; i++) {
+
+		for(var i = 0; i < arrLength; i++) {
 			initLat = MapModel.markerArray()[i].lat;
 			initLng = MapModel.markerArray()[i].lng;
 			latLng = {lat: initLat, lng: initLng};
@@ -55,7 +58,7 @@ var NMap = function() {
 			infoWindow = new google.maps.InfoWindow({
 				content: '<h2>' + MapModel.markerArray()[i].title + '</h2>' + '<br/>' +  '<p>' + MapModel.markerArray()[i].info + '</p>'
 			});
-			
+
 			(function(infoWindow, marker) {
 				marker.addListener('click', function() {
 					infoWindow.open(map, marker);
@@ -76,13 +79,15 @@ var NMap = function() {
 	};
 
 	// This function call deleteMarkers function.
-	// Checkes if the value typed in the searchText is equal to 
+	// Checkes if the value typed in the searchText is equal to
 	// some of the names from the placesArray.
 	// If there is a match it will be pushed to markerArray.
 	// The setMarkers and getFourSquareInfo is called
 	var search = function() {
+		var arrLength = MapModel.placesArray().length;
+
 		deleteMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
-		for(var i = 0; i < MapModel.placesArray().length; i++) {
+		for(var i = 0; i < arrLength; i++) {
 			if(MapModel.searchText().toUpperCase() == MapModel.placesArray()[i].title.toUpperCase()) {
 				MapModel.markerArray.push(MapModel.placesArray()[i]);
 			}
@@ -91,10 +96,12 @@ var NMap = function() {
 		getFourSquareInfo(MapModel.searchText());
 	};
 
-	// Deletes the information that is inside markerArray 
+	// Deletes the information that is inside markerArray
 	// and holdMarkerArray
 	var deleteMarkers = function() {
-		for(var i = 0; i < MapModel.markerArray().length; i++) {
+		var arrLength = MapModel.markerArray().length;
+
+		for(var i = 0; i < arrLength; i++) {
 			MapModel.holdMarkersArray()[i].setMap(null);
 		}
 		MapModel.markerArray.removeAll();
@@ -107,8 +114,9 @@ var NMap = function() {
 	// If it is, index is set to the i value of the array
 	// linkClick is called with the index value
 	var openInfo = function(data) {
+		var arrLength = MapModel.markerArray().length;
 		var index;
-		for(var i = 0; i < MapModel.markerArray().length; i++) {
+		for(var i = 0; i < arrLength; i++) {
 			if(data.title == MapModel.markerArray()[i].title){
 				index = i;
 			}
@@ -126,8 +134,8 @@ var NMap = function() {
 	var getFourSquareInfo = function(searhQuery) {
 		var venues;
 		var fourSquareURL = 'https://api.foursquare.com/v2/venues/search?client_id=RU3QTW3F1CUFGAZQM5KGLZSJHV5BVIBY0XDXODIED2CKR4BL&client_secret=YB04C05RQWLCRL2Y1U1KFZKGHKSCUSQ10SZ5VLRHRKJS0UCS&v=20130815&ll=58,8&ll=58.144744, 7.994747&radius=1500&query=' + searhQuery + '';
-		
-		
+
+
 		MapModel.fourSquareInfoArray.removeAll();
 
 		$.getJSON(fourSquareURL, function(data) {
@@ -151,13 +159,14 @@ var NMap = function() {
 	// into these infoWindows is just the name, since Four Square did not manage to
 	// return an adress on all the searches i tried
 	var fourSquareMarkers = function() {
+		var arrLength = MapModel.fourSquareInfoArray().length;
 		var lat;
 		var lng;
 		var latLng;
 		var marker;
 		var markerInfo;
 		var infoWindow;
-		for(var i = 0; i < MapModel.fourSquareInfoArray().length; i++) {
+		for(var i = 0; i < arrLength; i++) {
 			lat = MapModel.fourSquareInfoArray()[i].location.lat;
 			lng = MapModel.fourSquareInfoArray()[i].location.lng;
 			markerInfo = MapModel.fourSquareInfoArray()[i].name;
@@ -192,7 +201,8 @@ var NMap = function() {
 
 	// Deletes the markers in the holdFourSquareMarkersArray
 	var deleteFourSquareMarkers = function() {
-		for(var i = 0; i < MapModel.holdFourSquareMarkersArray().length; i++) {
+		var arrLength = MapModel.holdFourSquareMarkersArray().length;
+		for(var i = 0; i < arrLength; i++) {
 					MapModel.holdFourSquareMarkersArray()[i].setMap(null);
 				}
 				MapModel.holdFourSquareMarkersArray.removeAll();
@@ -208,7 +218,7 @@ var NMap = function() {
 
 	// Calls the init function when the document is ready
 	$(init);
-	
+
 	// Set the returned content as public
 	return {
 		MapModel: MapModel,
