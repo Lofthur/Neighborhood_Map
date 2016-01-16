@@ -15,6 +15,7 @@ var NMap = function() {
 	var map;
 	var places = Places();
 	var openInfoWindow;
+	var fourSquareInfoWindow;
 
 	// Initializes the arrays with data from places
 	var initArrays = function() {
@@ -63,7 +64,7 @@ var NMap = function() {
 			(function(infoWindow, marker) {
 				marker.addListener('click', function() {
 
-					closeLastOpenInfoWindow();
+					closeLastOpenInfoWindow(openInfoWindow);
 					openInfoWindow = infoWindow;
 					infoWindow.open(map, marker);
 					if(marker.getAnimation() != null) {
@@ -81,9 +82,9 @@ var NMap = function() {
 		}
 	};
 
-	var closeLastOpenInfoWindow = function() {
-		if(openInfoWindow) {
-			openInfoWindow.close();
+	var closeLastOpenInfoWindow = function(window) {
+		if(window) {
+			window.close();
 		}
 	};
 
@@ -142,7 +143,7 @@ var NMap = function() {
 	var getFourSquareInfo = function(searhQuery) {
 		var venues;
 		var fourSquareURL = 'https://api.foursquare.com/v2/venues/search?client_id=RU3QTW3F1CUFGAZQM5KGLZSJHV5BVIBY0XDXODIED2CKR4BL&client_secret=YB04C05RQWLCRL2Y1U1KFZKGHKSCUSQ10SZ5VLRHRKJS0UCS&v=20130815&ll=58,8&ll=58.144744, 7.994747&radius=1500&query=' + searhQuery + '';
-
+		var fourSquareInfoWindow;
 
 		MapModel.fourSquareInfoArray.removeAll();
 
@@ -174,6 +175,7 @@ var NMap = function() {
 		var marker;
 		var markerInfo;
 		var infoWindow;
+
 		for(var i = 0; i < arrLength; i++) {
 			lat = MapModel.fourSquareInfoArray()[i].location.lat;
 			lng = MapModel.fourSquareInfoArray()[i].location.lng;
@@ -190,7 +192,10 @@ var NMap = function() {
 			});
 
 			(function(infoWindow, marker) {
+
 				marker.addListener('click', function() {
+					closeLastOpenInfoWindow(fourSquareInfoWindow);
+					fourSquareInfoWindow = infoWindow;
 					infoWindow.open(map, marker);
 
 					if(marker.getAnimation() !== null) {
