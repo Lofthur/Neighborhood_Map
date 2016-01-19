@@ -7,22 +7,43 @@
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		
+		<link rel="stylesheet" type="text/css" href="css/menu.css">
+
 		<script async defer src="http://maps.googleapis.com/maps/api/js"></script>
-		
 	</head>
 	<body>
+		<div class="navbar navbar-default navbar-fixed-top transparent-nav">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse">
+				<table>
+					<thead>
+						<tr><h3>My Places</h3></tr>
+					</thead>
+					<tbody data-bind="foreach: NMap.MapModel.markerArray">
+						<tr>
+							<td data-bind="text: title, click: NMap.openInfo"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		<div class="container-fluid">
 			<div class="map" id="map"></div>
 			<div class="row">
-				<div class="col-xs-6 col-sm-3 col-md-offset-1">
+				<div class="col-xs-12 col-sm-3 col-md-offset-1">
 					<div class="map-overlay search-margin">
-					<div class="form-inline">
-						<div class="form-group">	
-							<input id="search-input" class="form-control table-shadow" type="text" placeholder="Search for places" data-bind="value: NMap.MapModel.searchText"/>
-							<button type="button" class="btn btn-shadow" data-bind="click: NMap.search"><span class="glyphicon glyphicon-search"></span></button>
+						<div class="form-inline">
+							<div class="form-group">
+								<input id="search-input" class="form-control table-shadow" type="text" placeholder="Search for places" data-bind="value: NMap.MapModel.searchText"/>
+								<button type="button" class="btn btn-shadow" data-bind="click: NMap.search"><span class="glyphicon glyphicon-search"></span></button>
+							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -65,6 +86,8 @@
 		<script src="js/jquery-2.1.4.min.js"></script>
 		<script src="js/knockout-3.4.0.js"></script>
 		<script src="js/places.js"></script>
+		<script src="bootstrap/js/bootstrap.js"></script>
+		<script src="js/menu.js"></script>
 		<script src="js/app.js"></script>
 	</body>
-</html>	
+</html>
