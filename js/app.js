@@ -58,7 +58,7 @@ var NMap = function() {
 			});
 
 			infoWindow = new google.maps.InfoWindow({
-				content: '<h2>' + MapModel.markerArray()[i].title + '</h2>' + '<br/>' +  '<p>' + MapModel.markerArray()[i].info + '</p>'
+				content: '<h2>' + MapModel.markerArray()[i].title + '</h2>' + '<br/>' +  '<p>' + MapModel.markerArray()[i].adr + '</p>' + '</br>' + '<a href="http://'+ MapModel.markerArray()[i].web+ '" target="_blank">' + MapModel.markerArray()[i].web + '</a>' + '</p>' + '</br>' + '<p>' + MapModel.markerArray()[i].info + '</p>'
 			});
 
 			(function(infoWindow, marker) {
