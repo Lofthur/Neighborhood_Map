@@ -1,3 +1,4 @@
-$('.menu-btn').click(function() {
-	$('.responsive-menu').toggleClass('expand');
-});
+$($('.navbar-toggle').on('click' , function() {
+	$(this).toggleClass('active'); 
+	})
+);
