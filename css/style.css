@@ -16,6 +16,10 @@
 	border-radius: 0;
 }
 
+.search-top-align {
+	margin-top: 35px;
+}
+
 .btn {
 	width: 50px;
 	border-radius: 0;
@@ -56,11 +60,4 @@ button span {
 
 .align-center {
 	text-align: center;
-}
-
-
-@media screen and (max-width: 1119px) {
-	.btn {
-		margin: 5px 0 0 0;
-	}
 }
