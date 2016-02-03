@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/menu.css">
 	</head>
@@ -27,15 +27,14 @@
 				</form>
 			</div>
 			<div class="navbar-collapse collapse">
-					<form class="navbar-form filter-form form-border" role="search">
+					<form class="navbar-form filter-form form-border" role="search" data-bind="visible: NMap.MapModel.fourSquareInfoArray().length < 1">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Filter my Places" data-bind="value: NMap.MapModel.filterText "/>
+							<input type="text" class="form-control" placeholder="Filter my Places" data-bind="textInput: NMap.MapModel.filterText"/>
 						<div class="input-group-btn">
-							<button type="button" class="btn" data-bind="click: NMap.filter"><span class="glyphicon glyphicon-cog"></span></button>
 						</div>
 					</div>
 				</form>
-				<div data-bind="visible: NMap.MapModel.markerArray().length > 0">
+				<div data-bind="visible: NMap.MapModel.fourSquareInfoArray().length < 1">
 				<table>
 					<thead>
 						<tr><h3>My Places</h3></tr>
@@ -54,7 +53,7 @@
 					</thead>
 					<tbody data-bind="foreach: NMap.MapModel.fourSquareInfoArray">
 						<tr>
-							<td data-bind="text: name"></td>
+							<td data-bind="text: name, click: NMap.openFSInfo"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -75,21 +74,18 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="row hide-element" data-bind="visible: NMap.MapModel.markerArray().length > 1">-->
-			<div class="row hide-element">
+			<div class="row hide-element" data-bind="visible: NMap.MapModel.fourSquareInfoArray().length < 1">
 				<div class="col-md-4 col-md-offset-1">
 					<div class="map-overlay filter-margin">
 						<div class="form-inline">
 							<div class="form-group">
 								<input id="filter-input" class="form-control table-shadow" type="text" placeholder="Filter my Places" data-bind="textInput: NMap.MapModel.filterText"/>
-								<button type="button" class="btn btn-shadow" data-bind="click: NMap.filter"><span class="glyphicon glyphicon-cog"></span></button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!--<div class="row hide-element" data-bind="if: (NMap.MapModel.filterText() == '' && NMap.MapModel.markerArray().length > 0)">-->
-			<div class="row hide-element">
+			<div class="row hide-element" data-bind="visible: NMap.MapModel.fourSquareInfoArray().length < 1">
 				<div class="col-sm-3 col-md-offset-1">
 					<div class="map-overlay">
 						<table class="table table-striped table-background table-shadow">
@@ -105,24 +101,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- This is the filter array -->
-			<!--<div class="row hide-element" data-bind="if: (NMap.MapModel.filterText() != '' && NMap.MapModel.searchText() == '')">
-			<div class="row hide-element">
-				<div class="col-sm-4 col-md-2 col-md-offset-1">
-					<div class="map-overlay">
-						<table class="table table-striped table-background table-shadow">
-							<thead>
-								<th><h2 class="table-header-background">My Places</h2></th>
-							</thead>
-							<tbody data-bind="foreach: NMap.MapModel.filterArray">
-								<tr>
-									<td data-bind="text: title"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>-->
 			<div class="row hide-element" data-bind="visible: NMap.MapModel.fourSquareInfoArray().length > 0">
 				<div class="col-sm-3 col-md-offset-1">
 					<div class="map-overlay table-scroll table-shadow">
@@ -148,7 +126,7 @@
 		<script src="js/jquery-2.1.4.min.js"></script>
 		<script src="js/knockout-3.4.0.js"></script>
 		<script src="js/places.js"></script>
-		<script src="bootstrap/js/bootstrap.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script src="js/menu.js"></script>
 		<script src="js/app.js"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAjm86cTnuiPLI-XfwOe_lm733DvuEoY4A&callback=NMap.init" onerror="NMap.mapError()" async defer></script>
