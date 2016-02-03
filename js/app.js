@@ -22,8 +22,10 @@ var NMap = function() {
 	var bufferFilterMarkers = ko.observableArray([]);
 	var isDelete = false;
 	var isBuffered = false;
-
 	var tempString;
+
+	// Subscribes on the filterText observable. Every change that happens
+	// trigger this.
 	MapModel.filterText.subscribe(function(newValue) {
 	var arrLengthFilter = MapModel.placesArray().length;
 
@@ -53,7 +55,7 @@ var NMap = function() {
 		}
 		if(MapModel.filterText() == '') {
 			MapModel.markerArray.removeAll();
-			MapModel.holdMarkersArray.removeAll();//?????
+			MapModel.holdMarkersArray.removeAll();
 
 			for(var i = 0; i < MapModel.placesArray().length; i++) {
 				MapModel.markerArray.push(MapModel.placesArray()[i]);
@@ -64,47 +66,6 @@ var NMap = function() {
 		}
 		setMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
 	});
-
-	/*MapModel.filterText.subscribe(function(newValue) {
-	var arrLengthFilter = MapModel.placesArray().length;
-	console.log(isDelete);
-		if(isDelete == false) {
-			for(var i = 0; i < MapModel.holdMarkersArray().length; i++) {
-				MapModel.holdMarkersArray()[i].setMap(null);
-			}
-			for(var i = 0; i < MapModel.holdFourSquareMarkersArray().length; i++) {
-				MapModel.holdFourSquareMarkersArray()[i].setMap(null);
-			}
-			MapModel.fourSquareInfoArray.removeAll();
-			isDelete = true;
-		}
-
-			filterDelete();
-			MapModel.markerArray.removeAll();
-
-		for(var i = 0; i < arrLengthFilter; i++) {
-			tempString = MapModel.placesArray()[i].title.toUpperCase();
-
-			if(tempString.search(MapModel.filterText().toUpperCase()) > -1) {
-				MapModel.filterArray.push(MapModel.placesArray()[i]);
-				MapModel.markerArray.push(MapModel.placesArray()[i]);
-				MapModel.holdFilterMarkers.push(bufferFilterMarkers()[i]);
-			}
-		}
-		if(MapModel.filterText() == '') {
-			filterDelete();
-			MapModel.markerArray.removeAll();
-
-			for(var i = 0; i < MapModel.placesArray().length; i++) {
-				MapModel.markerArray.push(MapModel.placesArray()[i]);
-			}
-
-			setMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
-			isDelete = false;
-		}
-
-		setFilterMarkers();
-	});*/
 
 	// Initializes the arrays with data from places
 	var initArrays = function() {
@@ -132,92 +93,7 @@ var NMap = function() {
 	};
 
 	// This function creates the markers from the markerArray
-	/*var setMarkers = function() {
-		var arrLength = MapModel.markerArray().length;
-		var initLat;
-		var marker;
-		var infoWindow;
-		var initLng;
-		var latLng;
-
-		for(var i = 0; i < arrLength; i++) {
-			initLat = MapModel.markerArray()[i].lat;
-			initLng = MapModel.markerArray()[i].lng;
-			latLng = {lat: initLat, lng: initLng};
-
-			marker = new google.maps.Marker({
-				position: latLng,
-				animation: google.maps.Animation.DROP
-			});
-
-			infoWindow = new google.maps.InfoWindow({
-				content: '<h2>' + MapModel.markerArray()[i].title + '</h2>' + '<br/>' +  '<p>' + MapModel.markerArray()[i].adr + '</p>' + '</br>' + '<a href="http://'+ MapModel.markerArray()[i].web + '" target="_blank">' + MapModel.markerArray()[i].web + '</a>' + '</p>' + '</br>' + '<p>' + MapModel.markerArray()[i].info + '</p>'
-			});
-
-			(function(infoWindow, marker) {
-				marker.addListener('click', function() {
-
-					closeLastOpenInfoWindow(openInfoWindow);
-					openInfoWindow = infoWindow;
-					infoWindow.open(map, marker);
-					if(marker.getAnimation() != null) {
-						marker.setAnimation() == null;
-					} else {
-						marker.setAnimation(google.maps.Animation.BOUNCE);
-						setTimeout(function(){marker.setAnimation(null);}, 1400);
-					}
-
-				});
-			}(infoWindow, marker));
-
-			MapModel.holdMarkersArray.push(marker);
-			marker.setMap(map);
-		}
-	};*/
-
-	/*var setFilterMarkers = function() {
-		var arrLength = MapModel.filterArray().length;
-		var initLat;
-		var marker;
-		var infoWindow;
-		var initLng;
-		var latLng;
-
-		for(var i = 0; i < arrLength; i++) {
-			initLat = MapModel.filterArray()[i].lat;
-			initLng = MapModel.filterArray()[i].lng;
-			latLng = {lat: initLat, lng: initLng};
-
-			marker = new google.maps.Marker({
-				position: latLng,
-			});
-
-			infoWindow = new google.maps.InfoWindow({
-				content: '<h2>' + MapModel.filterArray()[i].title + '</h2>' + '<br/>' +  '<p>' + MapModel.filterArray()[i].adr + '</p>' + '</br>' + '<a href="http://'+ MapModel.filterArray()[i].web + '" target="_blank">' + MapModel.filterArray()[i].web + '</a>' + '</p>' + '</br>' + '<p>' + MapModel.filterArray()[i].info + '</p>'
-			});
-
-			(function(infoWindow, marker) {
-				marker.addListener('click', function() {
-
-					closeLastOpenInfoWindow(openInfoWindow);
-					openInfoWindow = infoWindow;
-					infoWindow.open(map, marker);
-					if(marker.getAnimation() != null) {
-						marker.setAnimation() == null;
-					} else {
-						marker.setAnimation(google.maps.Animation.BOUNCE);
-						setTimeout(function(){marker.setAnimation(null);}, 1400);
-					}
-
-				});
-			}(infoWindow, marker));
-
-			MapModel.holdFilterMarkers.push(marker);
-			marker.setMap(map);
-		}
-	};*/
-
-		var setMarkers = function(marker, holdMarker) {
+	var setMarkers = function(marker, holdMarker) {
 		var mArr = ko.observableArray(marker);
 		var arrLength = mArr().length;
 		var initLat;
@@ -260,7 +136,7 @@ var NMap = function() {
 			holdMarker.push(marker);
 			marker.setMap(map);
 		}
-		console.log(isBuffered);
+
 		isBuffered = true;
 	};
 
@@ -333,6 +209,13 @@ var NMap = function() {
 	// This function uses the Four Square API
 	// uses $getJSon to get information fron Four Square
 	var getFourSquareInfo = function(searhQuery) {
+		if(searhQuery == '') {
+			deleteFourSquareMarkers();
+			MapModel.holdFourSquareMarkersArray.removeAll();
+			MapModel.fourSquareInfoArray.removeAll();
+			setMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
+			return;
+		}
 		var venues;
 
 		var fourSquareURL = 'https://api.foursquare.com/v2/venues/search?client_id=RU3QTW3F1CUFGAZQM5KGLZSJHV5BVIBY0XDXODIED2CKR4BL&client_secret=YB04C05RQWLCRL2Y1U1KFZKGHKSCUSQ10SZ5VLRHRKJS0UCS&v=20130815&ll=58,8&ll=58.144744, 7.994747&radius=1500&query=' + searhQuery + '';
@@ -342,7 +225,7 @@ var NMap = function() {
 
 		$.getJSON(fourSquareURL, function(data) {
 			venues = data.response.venues;
-			console.log(venues);
+
 			for(var i = 0; i < venues.length; i++) {
 				MapModel.fourSquareInfoArray.push(venues[i]);
 			}
@@ -369,11 +252,29 @@ var NMap = function() {
 		var marker;
 		var markerInfo;
 		var infoWindow;
+		var tempName;
+		var tempAddress;
+		var tempCity;
+		var tempCountry;
 
 		for(var i = 0; i < arrLength; i++) {
 			lat = MapModel.fourSquareInfoArray()[i].location.lat;
 			lng = MapModel.fourSquareInfoArray()[i].location.lng;
-			markerInfo = '<h2>' + MapModel.fourSquareInfoArray()[i].name + '</h2>';
+
+			tempName = MapModel.fourSquareInfoArray()[i].name;
+			tempAddress = MapModel.fourSquareInfoArray()[i].location.address;
+			if(tempAddress == null) {
+				tempAddress = 'No address found in Foursquare';
+			}
+			tempCity = MapModel.fourSquareInfoArray()[i].location.city;
+			if(tempCity == null) {
+				tempCity = 'No city found in Foursquare';
+			}
+			tempCountry = MapModel.fourSquareInfoArray()[i].location.country;
+			if(tempCountry == null) {
+				tempCountry = 'No country found in Foursquare but i bet it is in Norway';
+			}
+			markerInfo = '<h2>' + tempName  + '</h2>' + '</br>' + '<p>' + tempAddress + '</br>' + tempCity + '</br>' + tempCountry + '</p>';
 			latLng = {lat: lat, lng: lng};
 
 			marker = new google.maps.Marker({
