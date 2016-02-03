@@ -59,7 +59,7 @@ button span {
 }
 
 .table-scroll tbody {
-	height: 230px;
+	max-height: 296px;
 	overflow-y: auto;
 	width: 100%;
 }
