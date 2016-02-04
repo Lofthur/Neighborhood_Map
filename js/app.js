@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var NMap = function() {
 
@@ -13,6 +13,7 @@ var NMap = function() {
 		fourSquareInfoArray: ko.observableArray([]),
 		holdFourSquareMarkersArray: ko.observableArray([]),
 		isError: ko.observable(),
+		isActiveButton: ko.observable(false)
 	};
 
 	var map;
@@ -328,6 +329,13 @@ var NMap = function() {
 		linkClick(index, MapModel.holdFourSquareMarkersArray());
 	};
 
+	var setActive = function() {
+		if(MapModel.isActiveButton() == false)
+			MapModel.isActiveButton(true);
+		else
+			MapModel.isActiveButton(false);
+	};
+
 	// Calls the functions that are necessary for the application to run
 	var init = function() {
 		initMap();
@@ -343,6 +351,7 @@ var NMap = function() {
 		openInfo: openInfo,
 		openFSInfo: openFSInfo,
 		mapError: mapError,
+		setActive: setActive,
 		init: init,
 	};
 
