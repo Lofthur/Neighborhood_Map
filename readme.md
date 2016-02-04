@@ -3,6 +3,8 @@ in the southern part of Norway.
 
 How to use this map:
 
+Click on index.html to open the web application.
+
 The table shown with the text My Places is the location I hardcoded.
 In the Filter My Places input field, you can type in what you wish to filter.
 The table and markers will change to your filter criteria.
