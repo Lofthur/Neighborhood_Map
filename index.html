@@ -17,11 +17,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<form class="navbar-form pull-left search-form form-border" role="search">
+				<form class="navbar-form pull-left search-form form-border" role="search" data-bind="submit: NMap.search">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Search" data-bind="value: NMap.MapModel.searchText"/>
 						<div class="input-group-btn">
-							<button type="button" class="btn"><span class="glyphicon glyphicon-search" data-bind="click: NMap.search"></span></button>
+							<button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
 						</div>
 					</div>
 				</form>
@@ -117,7 +117,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row" data-bind="visible: NMap.MapModel.isError() == true">
+			<div class="row map-overlay" data-bind="visible: NMap.MapModel.isError() == true">
 				<div class="col-sm-3 col-md-offset-1">
 					<h2 class="table-header-background table-shadow align-center">Could not retrive data from FourSquare.<h2>
 				</div>

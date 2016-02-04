@@ -13,7 +13,7 @@ var NMap = function() {
 		fourSquareInfoArray: ko.observableArray([]),
 		holdFourSquareMarkersArray: ko.observableArray([]),
 		isError: ko.observable(),
-		isActiveButton: ko.observable(false)
+		isActiveButton: ko.observable(false),
 	};
 
 	var map;
@@ -24,12 +24,14 @@ var NMap = function() {
 	var isDelete = false;
 	var isBuffered = false;
 	var tempString;
+	var venues;
 
 	// Subscribes on the filterText observable. Every change that happens
 	// trigger this.
 	MapModel.filterText.subscribe(function(newValue) {
 	var arrLengthFilter = MapModel.placesArray().length;
-
+		// Checks the isDelete variable. If this is false the markers in the holdFourSquareMarkersArray is set to null.
+		// It also removes the objects from the fourSquareInfoArray.
 		if(isDelete == false) {
 			for(var i = 0; i < MapModel.holdFourSquareMarkersArray().length; i++) {
 				MapModel.holdFourSquareMarkersArray()[i].setMap(null);
@@ -54,6 +56,7 @@ var NMap = function() {
 				MapModel.holdFilterMarkers.push(bufferFilterMarkers()[i]);
 			}
 		}
+		// If the filterText() is null the markerArray and holdMarkersArray removes their content
 		if(MapModel.filterText() == '') {
 			MapModel.markerArray.removeAll();
 			MapModel.holdMarkersArray.removeAll();
@@ -63,6 +66,8 @@ var NMap = function() {
 			}
 
 			setMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
+		// When the filterText() is set to null again the isDelete is set back to false aagain so
+		// the if statement in the beginning of this function can be called again.
 			isDelete = false;
 		}
 		setMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
@@ -154,7 +159,6 @@ var NMap = function() {
 	// The setMarkers and getFourSquareInfo is called
 	var search = function() {
 		deleteMarkers();
-
 		getFourSquareInfo(MapModel.searchText());
 	};
 
@@ -185,7 +189,7 @@ var NMap = function() {
 	// is equal to a title in the markerArray.
 	// If it is, index is set to the i value of the array
 	// linkClick is called with the ndex value
-	var openInfo = function(data) {i
+	var openInfo = function(data) {
 		var arrLength = MapModel.markerArray().length;
 		var index;
 
@@ -209,6 +213,7 @@ var NMap = function() {
 
 	// This function uses the Four Square API
 	// uses $getJSon to get information fron Four Square
+
 	var getFourSquareInfo = function(searhQuery) {
 		if(searhQuery == '') {
 			deleteFourSquareMarkers();
@@ -217,7 +222,7 @@ var NMap = function() {
 			setMarkers(MapModel.markerArray(), MapModel.holdMarkersArray());
 			return;
 		}
-		var venues;
+		//var venues;
 
 		var fourSquareURL = 'https://api.foursquare.com/v2/venues/search?client_id=RU3QTW3F1CUFGAZQM5KGLZSJHV5BVIBY0XDXODIED2CKR4BL&client_secret=YB04C05RQWLCRL2Y1U1KFZKGHKSCUSQ10SZ5VLRHRKJS0UCS&v=20130815&ll=58,8&ll=58.144744, 7.994747&radius=1500&query=' + searhQuery + '';
 		var fourSquareInfoWindow;
